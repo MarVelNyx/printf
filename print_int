@@ -1,45 +1,42 @@
 #include "main.h"
+#include <unistd.h>
 
 /**
- * parse_int - substitute %i by argument number
- * @buff_dest: string to change
- * @arg: va_list arg to change
- * @buff_count: index of dst where the c of %c is
- * Return: New index
+ * print_digit - print integers.
+ *
+ * @args: argument.
+ *
+ * Return: count of chars.
  */
-int parse_int(char *buff_dest, va_list arg, int buff_count)
+
+int print_digit(va_list args)
 {
-	int tens = 1;
-	unsigned int tmp;
-	int number;
+	int decimal = 1;
+	int count_fun = 0;
+	long int digit = va_arg(args, int);
+	long int digitaux;
 
-	number = va_arg(arg, int);
-
-	if (number < 0)
+	if (digit < 0)
 	{
-		buff_dest[buff_count] = '-';
-		number *= -1;
-		buff_count++;
-	}
-	tmp = number;
-
-	if (number == INT_MIN)
-		tmp++;
-
-	while (tmp > 9)
-	{
-		tens *= 10;
-		tmp /= 10;
+		count_fun += _putchar('-');
+		digit *= -1;
 	}
 
-	tmp = number;
-	while (tens > 0)
+	if (digit < 10)
+		return (count_fun += _putchar(digit + '0'));
+
+	digitaux = digit;
+
+	while (digitaux > 9)
 	{
-		buff_dest[buff_count] = ('0' + tmp / tens);
-		tmp %= tens;
-		tens /= 10;
-		buff_count++;
+		decimal *= 10;
+		digitaux /= 10;
+	}
+	while (decimal >= 1)
+	{
+		count_fun += _putchar(((digit / decimal) % 10) + '0');
+		decimal /= 10;
 	}
 
-	return (buff_count);
+	return (count_fun);
 }
