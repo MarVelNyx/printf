@@ -1,17 +1,19 @@
 #include "main.h"
+#include <unistd.h>
 
 /**
- * parse_char - returns the character
- * @buff_dest: buffer
- * @arg: list of arguments
- * @buff_count: index of buffer pointer
- * Return: buffer index
+ * print_char - print char
+ *
+ * @args: argument.
+ *
+ * Return: count of chars.
  */
-int parse_char(char *buff_dest, va_list arg, int buff_count)
+
+int print_char(va_list args)
 {
-	char c = va_arg(arg, int);
+	char c = va_arg(args, int);
 
-	buff_dest[buff_count] = c;
+	_putchar(c);
 
-	return (++buff_count);
+	return (1);
 }
