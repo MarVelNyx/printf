@@ -1,37 +1,29 @@
 #include "main.h"
+#include <unistd.h>
 #include <stdarg.h>
 
 /**
- *print_rot13 - prints a string in rot13
- *@list:list to increment
- *Return:count of characters printed
+ * print_string - print string.
+ *
+ * @args: argument.
+ *
+ * Return: character count.
  */
 
-int print_rot13(va_list list)
+int print_string(va_list args)
 {
-char *str;
-int c = 0;
-int i, j;
-char input[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-char output[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
-str = va_arg(list, char *);
-if (!str)
-str = "(null)";
-for (i = 0; str[i]; i++)
-{
-for (j = 0; input[j]; j++)
-{
-if (input[j] == str[i])
-{
-_putchar(output[j]);
-c++;
-break;
-}
-}
-if (!input[j])
-{
-c += _putchar(str[i]);
-}
-}
-return (c);
+	int i;
+	int count_fun = 0;
+	char *str = va_arg(args, char *);
+
+	if (!str)
+		str = "(null)";
+
+	if (str[0] == '\0')
+		return (-1);
+
+	for (i = 0; str[i] != '\0'; i++)
+		count_fun += _putchar(str[i]);
+
+	return (count_fun);
 }
