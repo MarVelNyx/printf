@@ -9,7 +9,7 @@
  * Return: count of chars.
  */
 
-int print_digit(va_list args)
+int print_int(va_list args)
 {
 	int decimal = 1;
 	int count_fun = 0;
