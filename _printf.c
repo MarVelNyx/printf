@@ -1,47 +1,51 @@
 #include "main.h"
-#include <unistd.h>
+#include <stdarg.h>
+
 /**
- * _printf - Emulate the original.
- *
- * @format: Format by specifier.
- *
- * Return: count of chars.
+ * _printf - function for format print
+ * @format: list of arguments
+ * Return: number of char to print
  */
 int _printf(const char *format, ...)
 {
-	int i = 0, count = 0, count_fun;
-	va_list args;
+	va_list ap;
+	int (*f)(va_list);
+	unsigned int i = 0, counter = 0;
 
-	va_start(args, format);
-	if (!format || (format[0] == '%' && !format[1]))
+	if (format == NULL)
 		return (-1);
-	if (format[0] == '%' && format[1] == ' ' && !format[2])
-		return (-1);
-	while (format[i])
+
+	va_start(ap, format);
+	whie (format && format[i])
 	{
-		count_fun = 0;
-		if (format[i] == '%')
+		if (format[i] != '%')
 		{
-			if (!format[i + 1] || (format[i + 1] == ' ' && !format[i + 2]))
-			{
-				count = -1;
-				break;
-			}
-			count_fun += get_function(format[i + 1], args);
-			if (count_fun == 0)
-				count += _putchar(format[i + 1]);
-			if (count_fun == -1)
-				count = -1;
+			_putchar(format[i]);
+			counter++;
 			i++;
+			continue;
 		}
 		else
 		{
-			(count == -1) ? (_putchar(format[i])) : (count += _putchar(format[i]));
+			if (format[i + 1] == '%')
+			{
+				_putchar('%');
+				counter++;
+				i += 2;
+				continue;
+			}
+			else
+			{
+				f = check_format(&format[i + 1]);
+				if (f == NULL)
+					return (-1);
+				i += 2;
+				counter += f(ap);
+				continue;
+			}
 		}
 		i++;
-		if (count != -1)
-			count += count_fun;
 	}
-	va_end(args);
-	return (count);
+	va_end(ap);
+	return (counter);
 }
