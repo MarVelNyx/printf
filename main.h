@@ -16,11 +16,9 @@ typedef struct print
 	int (*f)(va_list);
 } print_t;
 
-/*prototypes*/
 int _printf(const char *format, ...);
 int _putchar(char c);
-
-/*Conversion specifiers*/
+int (*check_format(const char *format))(va_list);
 int print_c(va_list c);
 int print_s(va_list s);
 int print_i(va_list i);
